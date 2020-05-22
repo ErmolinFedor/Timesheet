@@ -14,7 +14,7 @@ public class DepartmentDAOJDBC implements DepartmentDAO {
     public List<Department> getAllDepartments(){
         List<Department> departments = new ArrayList<>();
         try (Connection connection = JDBCPostgreeConnection.getConnection()){
-            String sql = "select * from Departaments";
+            String sql = "select * from Departments";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()){
@@ -26,7 +26,7 @@ public class DepartmentDAOJDBC implements DepartmentDAO {
             }
             for (Department department: departments) {
                 EmployeeDAO employeeDAO = new EmployeeDAOJDBC();
-                String sqlDep = "select * from WorPlace where idDepartment = ?";
+                String sqlDep = "select * from WorkPlace where idDepartment = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sqlDep)){
                     preparedStatement.setInt(1, department.getId());
                     ResultSet resultSet = preparedStatement.executeQuery();
