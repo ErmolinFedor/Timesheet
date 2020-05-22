@@ -29,12 +29,13 @@ public class EmployeeDAOJDBC implements EmployeeDAO {
             String sql = "select * from Employees where id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
                 preparedStatement.setInt(1, id);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    employee.setId(resultSet.getInt("id"));
-                    employee.setName(resultSet.getString("name"));
-                    employee.setSurname(resultSet.getString("surname"));
-                    employee.setPosition(resultSet.getString("position"));
+                try(ResultSet resultSet = preparedStatement.executeQuery();){
+                    while (resultSet.next()) {
+                        employee.setId(resultSet.getInt("id"));
+                        employee.setName(resultSet.getString("name"));
+                        employee.setSurname(resultSet.getString("surname"));
+                        employee.setPosition(resultSet.getString("position"));
+                    }
                 }
             }
         }catch (SQLException e){

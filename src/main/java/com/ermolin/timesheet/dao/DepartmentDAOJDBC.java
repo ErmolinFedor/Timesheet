@@ -16,24 +16,29 @@ public class DepartmentDAOJDBC implements DepartmentDAO {
         try (Connection connection = JDBCPostgreeConnection.getConnection()){
             String sql = "select * from Departments";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()){
-                    Department department = new Department();
-                    department.setName(resultSet.getString("name"));
-                    department.setId(resultSet.getInt("id"));
-                    departments.add(department);
+
+                try(ResultSet resultSet = preparedStatement.executeQuery();){
+                    while (resultSet.next()){
+                        Department department = new Department();
+                        department.setName(resultSet.getString("name"));
+                        department.setId(resultSet.getInt("id"));
+                        departments.add(department);
+                    }
                 }
+
             }
             for (Department department: departments) {
                 EmployeeDAO employeeDAO = new EmployeeDAOJDBC();
                 String sqlDep = "select * from WorkPlace where idDepartment = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sqlDep)){
                     preparedStatement.setInt(1, department.getId());
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()){
-                        int id = resultSet.getInt("idEmployee");
-                        department.addEmployee(employeeDAO.getEmployeeByID(id));
+                    try (ResultSet resultSet = preparedStatement.executeQuery();){
+                        while (resultSet.next()){
+                            int id = resultSet.getInt("idEmployee");
+                            department.addEmployee(employeeDAO.getEmployeeByID(id));
+                        }
                     }
+
                 }
             }
         }catch (SQLException e){

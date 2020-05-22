@@ -44,13 +44,13 @@ public class PersonalCalendarDAOJDBC implements  PersonalCalendarDAO{
                 preparedStatement.setInt(2, idDep + 1 );
                 preparedStatement.setDate(3, date);
                 preparedStatement.setDate(4, date);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()){
-                    Calendar calendar = new GregorianCalendar();
-                    calendar.setTime(resultSet.getDate("day"));
-                    DayType dayType = factory(resultSet.getString("workType"));
-                    res.addDay(calendar.get(Calendar.DAY_OF_MONTH) -1, dayType);
+                try (ResultSet resultSet = preparedStatement.executeQuery();){
+                    while (resultSet.next()){
+                        Calendar calendar = new GregorianCalendar();
+                        calendar.setTime(resultSet.getDate("day"));
+                        DayType dayType = factory(resultSet.getString("workType"));
+                        res.addDay(calendar.get(Calendar.DAY_OF_MONTH) -1, dayType);
+                    }
                 }
             }
         }catch (SQLException e){
