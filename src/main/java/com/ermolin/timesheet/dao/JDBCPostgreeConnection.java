@@ -1,5 +1,6 @@
 package com.ermolin.timesheet.dao;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +16,7 @@ public class JDBCPostgreeConnection {
     static {
         properties = new Properties();
         try {
-            properties.load(new FileInputStream("src/main/resources/properties.txt"));
+            properties.load(ClassLoader.getSystemResourceAsStream("properties.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }

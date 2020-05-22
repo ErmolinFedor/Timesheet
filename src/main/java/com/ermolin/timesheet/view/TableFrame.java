@@ -54,22 +54,6 @@ public class TableFrame extends JFrame {
 
     private void build(){
 
-        /*JMenuBar menuBar = new JMenuBar();
-        JMenu window = new JMenu("Окно");
-        JMenuItem tableman = new JMenuItem("Табельщик");
-        JMenuItem adminDep = new JMenuItem("Администратор департаментов");
-        adminDep.addActionListener(e -> new AdminDepFrame());
-        JMenuItem adminEmployee = new JMenuItem("Администратор работников");
-        adminEmployee.addActionListener(e -> new AdminEmployee());
-        JMenuItem save = new JMenuItem("Сохранить");
-        save.setEnabled(false);
-        window.add(tableman);
-        window.add(adminDep);
-        window.add(adminEmployee);
-        window.add(save);
-        menuBar.add(window);
-        setJMenuBar(menuBar);*/
-
         JPanel middle = new JPanel();
         middle.setAlignmentX(CENTER_ALIGNMENT);
         middle.setAlignmentY(Component.TOP_ALIGNMENT);
